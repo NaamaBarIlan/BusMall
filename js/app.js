@@ -18,6 +18,13 @@ var previouslyViewed = [];
 // The total number of times the user clicked on images - should be up to 25
 var totalClicks = 0;
 
+// Arrays to hold data for the chart
+var productName = [];
+var picClickTotal = [];
+
+var dataChart;
+var chartDrawn = false;
+
 
 // Constructor
 function ProductPictures(imageName){
@@ -49,6 +56,16 @@ new ProductPictures('water-can');
 new ProductPictures('wine-glass');
 new ProductPictures('sweep');
 
+
+
+// Add the data into the chart arrays 
+
+function updateChartArrays() {
+  for (var i = 0; i < productPicsArray.length; i++){
+    productName[i] = productPicsArray[i].name;
+    picClickTotal[i] = productPicsArray[i].timesPicWasClicked;
+  }
+}
 
 // Show a random picture function
 function showARandomPicture(){
@@ -84,10 +101,11 @@ function productSelection(){
   }
 }
 
-// renders 3 random images
+// render 3 random product images
 function renderProducts(){
   // function call - determines the first 3 pictures
   productSelection();
+
   // assign src
   productOne.src = productPicsArray[previouslyViewed[0]].filepath;
   productTwo.src = productPicsArray[previouslyViewed[1]].filepath;
@@ -109,6 +127,67 @@ function renderProducts(){
   productPicsArray[previouslyViewed[2]].timesPicWasShown++;
 }
 
+// CHART
+// Charts rendered using Chart JS v.2.8.0
+// http://www.chartjs.org/
+
+var data = {
+  labels: productName,
+  datasets: [{
+    label: 'Total Votes',
+    data: picClickTotal,
+    backgroundColor: [
+      '#1E403C',
+      '#397368',
+      '#7CA69E',
+      '#9FBFB9',
+      '#C1D9D4',
+      '#9FBFB9',
+      '#7CA69E',
+      '#397368',
+      '#1E403C',
+      '#397368',
+      '#7CA69E',
+      '#9FBFB9',
+      '#C1D9D4',
+      '#9FBFB9',
+      '#7CA69E',
+      '#397368',
+      '#1E403C',
+      '#397368',
+      '#7CA69E'
+    ],
+    hoverBackgroundColor: '#FFD0C7',
+    borderColor: '#595959',
+    borderWidth: 1
+  }]
+};
+
+function drawChart(){
+  var ctx = document.getElementById('data-chart').getContext('2d');
+  dataChart = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: false,
+      animation: {
+        duration: 2000,
+        easing: 'easeOutBounce'
+      }
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          max: 10,
+          min: 0,
+          stepSize: 1.0
+        }
+      }]
+    }
+  });
+  chartDrawn = true;
+}
+
 // Event handler
 function handlePicClick(event){
   totalClicks++;
@@ -121,19 +200,23 @@ function handlePicClick(event){
 	
   if (totalClicks === 25){
     productPictures.removeEventListener('click', handlePicClick);
-    renderList();
+    // renderList();
+
+    // update and draw chart
+    updateChartArrays();
+    drawChart();
   }
 	
   renderProducts();
 }
 
-function renderList(){
-  for (var i = 0; i < productPicsArray.length; i++){
-    var liEl = document.createElement('li');
-    liEl.textContent = `${productPicsArray[i].name} has ${productPicsArray[i].timesPicWasClicked} selections and was viewed a total of ${productPicsArray[i].timesPicWasShown} times`;
-    productList.appendChild(liEl); 
-  }
-}
+// function renderList(){
+//   for (var i = 0; i < productPicsArray.length; i++){
+//     var liEl = document.createElement('li');
+//     liEl.textContent = `${productPicsArray[i].name} has ${productPicsArray[i].timesPicWasClicked} selections and was viewed a total of ${productPicsArray[i].timesPicWasShown} times`;
+//     productList.appendChild(liEl); 
+//   }
+// }
 
 // Event listener
 productPictures.addEventListener('click', handlePicClick);
