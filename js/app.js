@@ -22,9 +22,31 @@ var totalClicks = 0;
 var productName = [];
 var picClickTotal = [];
 
+
 var dataChart;
 var chartDrawn = false;
 
+// LOCAL STORAGE 
+// check if there anything in the LS
+
+if (localStorage.getItem('testLS')){
+
+  // *retrieve* data from LS
+  var retrieveData = localStorage.getItem('testLS');
+  console.log('the data retrieved from LS is ' + retrieveData);
+  
+  // *parse* the LS data
+  var parseData = JSON.parse(retrieveData);
+  console.log('the data parsed is ' , parseData);
+  
+  // *assign* that data to the place it will be used
+  productPicsArray = parseData;
+
+} else {
+  // create instances
+  instances();
+  // paint the page
+}
 
 // Constructor
 function ProductPictures(imageName){
@@ -36,29 +58,30 @@ function ProductPictures(imageName){
 }
 
 // Instances
-new ProductPictures('bag');
-new ProductPictures('banana');
-new ProductPictures('boots');
-new ProductPictures('breakfast');
-new ProductPictures('bubblegum');
-new ProductPictures('chair');
-new ProductPictures('cthulhu');
-new ProductPictures('dog-duck');
-new ProductPictures('dragon');
-new ProductPictures('pen');
-new ProductPictures('pet-sweep');
-new ProductPictures('scissors');
-new ProductPictures('shark');
-new ProductPictures('sweep');
-new ProductPictures('tauntaun');
-new ProductPictures('unicorn');
-new ProductPictures('water-can');
-new ProductPictures('wine-glass');
-new ProductPictures('sweep');
+function instances(){
+  new ProductPictures('bag');
+  new ProductPictures('banana');
+  new ProductPictures('boots');
+  new ProductPictures('breakfast');
+  new ProductPictures('bubblegum');
+  new ProductPictures('chair');
+  new ProductPictures('cthulhu');
+  new ProductPictures('dog-duck');
+  new ProductPictures('dragon');
+  new ProductPictures('pen');
+  new ProductPictures('pet-sweep');
+  new ProductPictures('scissors');
+  new ProductPictures('shark');
+  new ProductPictures('sweep');
+  new ProductPictures('tauntaun');
+  new ProductPictures('unicorn');
+  new ProductPictures('water-can');
+  new ProductPictures('wine-glass');
+  new ProductPictures('sweep');
+}
 
 
-
-// Add the data into the chart arrays 
+// Add the data into the chart arrays
 
 function updateChartArrays() {
   for (var i = 0; i < productPicsArray.length; i++){
@@ -197,18 +220,29 @@ function handlePicClick(event){
       productPicsArray[i].timesPicWasClicked++;
     }
   }
-	
+    
   if (totalClicks === 25){
     productPictures.removeEventListener('click', handlePicClick);
     // renderList();
-
+  
     // update and draw chart
     updateChartArrays();
     drawChart();
+  
+    // LS - after user answers 25 Qs
+    // *store the data*
+  
+    var stringData = JSON.stringify(productPicsArray);
+    localStorage.setItem('testLS', stringData);
+  
+    console.log('the data stored in LS is ' + stringData);
   }
-	
+  
   renderProducts();
+    
 }
+
+// This renders the list for the first part of BusMall, now commmented out.
 
 // function renderList(){
 //   for (var i = 0; i < productPicsArray.length; i++){
@@ -223,3 +257,40 @@ productPictures.addEventListener('click', handlePicClick);
 
 // Render the first 3 pictures function call
 renderProducts();
+
+
+// Local Storage
+
+// Local Storage Plan
+
+// ===========================
+
+// On page load - create an if/else statement to check if there anything in the LS
+// if(there's LS data){
+// *retrieve* data from LS
+// parse the data
+// *assign* that data to the place it will be used
+// } else {
+// create instances
+// }
+// paint the page
+
+// =============================
+
+// After user answers 25 Qs
+// *store the data*
+
+// test LS
+
+// var stringData = JSON.stringify(productPicsArray);
+// localStorage.setItem('testLS', stringData);
+
+// console.log('the data stored in LS is ' + stringData);
+
+// var retrieveData = localStorage.getItem('testLS');
+
+// console.log('the data retrieved from LS is ' + retrieveData);
+
+// var parseData = JSON.parse(retrieveData);
+
+// console.log('the data parsed is ' , parseData);
