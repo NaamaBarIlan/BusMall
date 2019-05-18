@@ -1,14 +1,30 @@
+/* Entire Page */
 
 body {
     width: 960px;
     margin: 0px auto;
 }
 
+/* Header */
+
+header {
+    height: 200px;
+    background-color: rgba(225, 225, 225, 0.762);
+    /* url("img/annie-spratt-1132840-unsplash.jpg"); */
+}
 
 h1 {
-    font-size: 50px;
+    font-family: 'Racing Sans One', cursive;
+    font-size: 75px;
     text-align: center;
-    margin: 50px;
+}
+
+/* Main */
+
+h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 30px;
+    text-align: center;
 }
 
 img {

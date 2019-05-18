@@ -27,6 +27,17 @@ var dataChart;
 var chartDrawn = false;
 
 // LOCAL STORAGE 
+
+// On page load - create an if/else statement to check if there anything in the LS
+// if(there's LS data){
+// *retrieve* data from LS
+// parse the data
+// *assign* that data to the place it will be used
+// } else {
+// create instances
+// }
+// paint the page
+
 // check if there anything in the LS
 
 if (localStorage.getItem('testLS')){
@@ -43,9 +54,9 @@ if (localStorage.getItem('testLS')){
   productPicsArray = parseData;
 
 } else {
-  // create instances
+  // create instances to paint the page
   instances();
-  // paint the page
+  
 }
 
 // Constructor
@@ -233,6 +244,7 @@ function handlePicClick(event){
     // *store the data*
   
     var stringData = JSON.stringify(productPicsArray);
+
     localStorage.setItem('testLS', stringData);
   
     console.log('the data stored in LS is ' + stringData);
@@ -282,15 +294,15 @@ renderProducts();
 
 // test LS
 
-// var stringData = JSON.stringify(productPicsArray);
-// localStorage.setItem('testLS', stringData);
+var stringData = JSON.stringify(productPicsArray);
+localStorage.setItem('testLS', stringData);
 
-// console.log('the data stored in LS is ' + stringData);
+console.log('the data stored in LS is ' + stringData);
 
-// var retrieveData = localStorage.getItem('testLS');
+var retrieveData = localStorage.getItem('testLS');
 
-// console.log('the data retrieved from LS is ' + retrieveData);
+console.log('the data retrieved from LS is ' + retrieveData);
 
-// var parseData = JSON.parse(retrieveData);
+var parseData = JSON.parse(retrieveData);
 
-// console.log('the data parsed is ' , parseData);
+console.log('the data parsed is ' , parseData);
