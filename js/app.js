@@ -86,6 +86,7 @@ function instances(){
   new ProductPictures('sweep');
   new ProductPictures('tauntaun');
   new ProductPictures('unicorn');
+  new ProductPictures('usb');
   new ProductPictures('water-can');
   new ProductPictures('wine-glass');
   new ProductPictures('sweep');
